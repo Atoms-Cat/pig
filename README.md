@@ -64,6 +64,10 @@ pig
 └── pig-upms -- 通用用户权限管理模块
      └── pig-upms-api -- 通用用户权限管理系统公共api模块
      └── pig-upms-biz -- 通用用户权限管理系统业务处理模块[4000]
+└── pig-softswitch -- 音视频功能模块
+     └── pig-sip-call -- 基于 sip 音频通信功能模块 [TODO]
+     └── pig-sip-console -- 基于 sip 音频中间件对接 [TODO]
+     └── pig-sip-domain -- 基于 sip 音频域功能模块 [4001]
 └── pig-visual
      └── pig-monitor -- 服务监控 [5001]
      ├── pig-codegen -- 图形化代码生成 [5002]
