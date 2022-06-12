@@ -51,11 +51,16 @@ public class SipSubscriberServiceImpl extends ServiceImpl<SipSubscriberMapper, S
 		try {
 			for (SipDomain domain : sipSubscriberInfoParam.getDomainSet()) {
 				SipSubscriberVO sipSubscriberVO = new SipSubscriberVO();
-				sipSubscriberVO.setUrl(sipDomainSettingService.getSettingByDomain(domain.getId(), DomainSettingEnum.WS_URL));
+				sipSubscriberVO.setContactUri(sipSubscriberInfoParam.getContactUri());
+				// TODO
+				if ("0".equals(sipSubscriberInfoParam.getTerminalType())) {
+					sipSubscriberVO.setUrl(sipDomainSettingService.getSettingByDomain(domain.getId(), DomainSettingEnum.WS_URL));
+				} else if ("1".equals(sipSubscriberInfoParam.getTerminalType())) {
+					sipSubscriberVO.setUrl(sipDomainSettingService.getSettingByDomain(domain.getId(), DomainSettingEnum.UDP_URL));
+				}
 				// 获取旧的分配数据
-				if (!getUseList(sipSubscriberInfoParam.getUserId(), domain.getDomain(), list)) {
+				if (!getUseList(sipSubscriberInfoParam.getUserId(), domain.getDomain(), list, sipSubscriberVO)) {
 					// 获取新的分配数据
-					sipSubscriberVO.setContactUri(sipSubscriberInfoParam.getContactUri());
 					setCache(new Page<>(1, 10), domain.getDomain());
 					SipSubscriber sipSubscriber = getOneInCache(domain.getDomain());
 					if (sipSubscriber != null) {
@@ -67,8 +72,6 @@ public class SipSubscriberServiceImpl extends ServiceImpl<SipSubscriberMapper, S
 						list.add(sipSubscriberVO);
 					}
 				}
-
-
 			}
 		} catch (Exception e) {
 			log.error("分配分机号异常", e);
@@ -77,14 +80,13 @@ public class SipSubscriberServiceImpl extends ServiceImpl<SipSubscriberMapper, S
 		return list;
 	}
 
-	private Boolean getUseList(Long userId, String domain, List<SipSubscriberVO> sipSubscriberVOList) {
+	private Boolean getUseList(Long userId, String domain, List<SipSubscriberVO> sipSubscriberVOList, SipSubscriberVO sipSubscriberVO) {
 		SipUserSubscriberParam sipUserSubscriberParam = new SipUserSubscriberParam();
 		sipUserSubscriberParam.setUserId(userId);
 		sipUserSubscriberParam.setDomain(domain);
 		List<SipSystemUserSubscriberDTO> list = sipSystemUserSubscriberService.getListByUserId(sipUserSubscriberParam);
 		if (list != null && list.size() > 0) {
 			for (SipSystemUserSubscriberDTO subscriberDTO : list) {
-				SipSubscriberVO sipSubscriberVO = new SipSubscriberVO();
 				BeanUtils.copyProperties(subscriberDTO, sipSubscriberVO);
 				sipSubscriberVOList.add(sipSubscriberVO);
 			}

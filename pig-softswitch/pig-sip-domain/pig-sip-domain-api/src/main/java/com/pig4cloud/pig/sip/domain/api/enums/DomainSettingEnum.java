@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum DomainSettingEnum {
 
-	WS_URL("WS_URL", "websocket地址")
+	WS_URL("WS_URL", "sip websocket地址"),
+
+	UDP_URL("UDP_URL", "sip udp地址"),
 	;
 	/**
 	 * 类型
