@@ -17,10 +17,14 @@ public class SipSystemUserSubscriber extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private long id;
+	private Long id;
 
-	private long subscriberId;
-	private long userId;
+	private Long subscriberId;
+	private Long userId;
+
+	/**
+	 * 0-正常，1-删除
+	 */
 	private String delFlag;
-
+	private String terminalType;
 }

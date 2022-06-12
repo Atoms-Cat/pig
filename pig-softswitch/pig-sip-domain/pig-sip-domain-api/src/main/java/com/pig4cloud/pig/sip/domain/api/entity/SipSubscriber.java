@@ -8,6 +8,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * @author th158
+ */
 @Data
 @Schema(description = "sip分机号")
 @TableName("sip_subscriber")
@@ -17,7 +20,7 @@ public class SipSubscriber extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private long id;
+	private Long id;
 
 	private String username;
 	private String domain;
