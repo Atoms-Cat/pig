@@ -13,15 +13,18 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @Schema(description = "sip域")
-@TableName("sip_domain")
+@TableName("sip_domain_setting")
 @EqualsAndHashCode(callSuper = true)
-public class SipDomain extends BaseEntity {
+public class SipDomainSetting extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
-	private Long pid;
-	private String domain;
-	private String delFlag;
+
+	private Long domainId;
+
+	private String settingKey;
+
+	private String settingValue;
 }

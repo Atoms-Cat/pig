@@ -2,6 +2,8 @@ package com.pig4cloud.pig.sip.domain.api.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author th158
  */
@@ -16,7 +18,7 @@ public class SipSubscriberVO {
 
 	private String password;
 
-	private String url;
+	private List<String> url;
 
 	private String contactUri;
 }

@@ -21,11 +21,9 @@ public class SipSubscriber extends BaseEntity {
 
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
-
 	private String username;
 	private String domain;
 	private String password;
 	private String belongSystem;
 	private String delFlag;
-
 }

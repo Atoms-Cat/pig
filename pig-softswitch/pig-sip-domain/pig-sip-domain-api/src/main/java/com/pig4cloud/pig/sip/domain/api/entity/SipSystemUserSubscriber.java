@@ -18,10 +18,8 @@ public class SipSystemUserSubscriber extends BaseEntity {
 
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
-
 	private Long subscriberId;
 	private Long userId;
-
 	/**
 	 * 0-正常，1-删除
 	 */

@@ -4,6 +4,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.pig4cloud.pig.common.core.util.R;
 import com.pig4cloud.pig.common.security.service.PigUser;
 import com.pig4cloud.pig.common.security.util.SecurityUtils;
+import com.pig4cloud.pig.sip.domain.api.entity.SipDomain;
 import com.pig4cloud.pig.sip.domain.api.param.SipSubscriberInfoParam;
 import com.pig4cloud.pig.sip.domain.api.vo.SipSubscriberVO;
 import com.pig4cloud.pig.sip.domain.service.SipSubscriberService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author th158
@@ -34,7 +36,7 @@ public class SipSubscriberController {
 	@GetMapping(value = {"/info"})
 	public R<List<SipSubscriberVO>> info(SipSubscriberInfoParam sipSubscriberInfoParam, HttpServletRequest request) {
 		PigUser pigUser = SecurityUtils.getUser();
-		Set<String> domainSet = sysUserDomainService.getDomainByUserId(pigUser.getId());
+		Set<SipDomain> domainSet = sysUserDomainService.getDomainByUserId(pigUser.getId());
 		if (domainSet == null && domainSet.size() == 0) {
 			throw new RuntimeException("该用户未配置通话使用域");
 		}

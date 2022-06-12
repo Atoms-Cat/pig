@@ -1,5 +1,6 @@
 package com.pig4cloud.pig.sip.domain.api.param;
 
+import com.pig4cloud.pig.sip.domain.api.entity.SipDomain;
 import lombok.Data;
 
 import java.util.Set;
@@ -17,7 +18,7 @@ public class SipSubscriberInfoParam {
 
 	private Long userId;
 
-	private Set<String> domainSet;
+	private Set<SipDomain> domainSet;
 
 	private String contactUri;
 }

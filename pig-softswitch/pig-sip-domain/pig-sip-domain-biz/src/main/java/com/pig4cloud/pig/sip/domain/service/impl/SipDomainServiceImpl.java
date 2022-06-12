@@ -28,7 +28,7 @@ public class SipDomainServiceImpl extends ServiceImpl<SipDomainMapper, SipDomain
 	 * @return
 	 */
 	@Override
-	public Set<String> getDomianByPid(List<Long> longList, Set<String> stringSet) {
+	public Set<SipDomain> getDomianByPid(List<Long> longList, Set<SipDomain> stringSet) {
 		if (longList != null && longList.size() > 0) {
 			QueryWrapper<SipDomain> queryWrapper = new QueryWrapper<>();
 			queryWrapper.lambda().in(SipDomain::getId, longList);
@@ -37,7 +37,7 @@ public class SipDomainServiceImpl extends ServiceImpl<SipDomainMapper, SipDomain
 			if (list != null && list.size() > 0) {
 				for (SipDomain sipDomain : list) {
 					if (0L == sipDomain.getPid()) {
-						stringSet.add(sipDomain.getDomain());
+						stringSet.add(sipDomain);
 					} else {
 						longList.add(sipDomain.getPid());
 					}

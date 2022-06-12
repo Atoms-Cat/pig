@@ -1,6 +1,7 @@
 package com.pig4cloud.pig.sip.domain.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.pig4cloud.pig.sip.domain.api.entity.SipDomain;
 import com.pig4cloud.pig.sip.domain.api.entity.SysUserDomain;
 
 import java.util.Set;
@@ -15,5 +16,5 @@ public interface SysUserDomainService extends IService<SysUserDomain> {
 	 * @param userId
 	 * @return
 	 */
-	Set<String> getDomainByUserId(Long userId);
+	Set<SipDomain> getDomainByUserId(Long userId);
 }

@@ -18,5 +18,5 @@ public interface SipDomainService extends IService<SipDomain> {
 	 * @param stringSet
 	 * @return
 	 */
-	Set<String> getDomianByPid(List<Long> longList, Set<String> stringSet);
+	Set<SipDomain> getDomianByPid(List<Long> longList, Set<SipDomain> stringSet);
 }

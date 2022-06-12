@@ -32,15 +32,15 @@ public class SysUserDomainServiceImpl extends ServiceImpl<SysUserDomainMapper, S
 	 * @return
 	 */
 	@Override
-	public Set<String> getDomainByUserId(Long userId) {
-		Set<String> domain = new HashSet<>();
+	public Set<SipDomain> getDomainByUserId(Long userId) {
+		Set<SipDomain> domain = new HashSet<>();
 		try {
 			List<SipDomain> list = sysUserDomainMapper.getDomainByUserId(userId);
 			List<Long> pidList = new ArrayList<>();
 			if (list != null) {
 				for (SipDomain sipDomain : list) {
 					if (0L == sipDomain.getPid()) {
-						domain.add(sipDomain.getDomain());
+						domain.add(sipDomain);
 					} else {
 						pidList.add(sipDomain.getPid());
 					}
