@@ -96,6 +96,11 @@
                 <artifactId>pig-upms-api</artifactId>
                 <version>${pig.common.version}</version>
             </dependency>
+			<dependency>
+				<groupId>com.pig4cloud</groupId>
+				<artifactId>pig-sip-domain-api</artifactId>
+				<version>${pig.common.version}</version>
+			</dependency>
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
