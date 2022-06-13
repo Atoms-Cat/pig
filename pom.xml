@@ -101,6 +101,7 @@
         <module>pig-common</module>
         <module>pig-visual</module>
         <module>pig-softswitch</module>
+        <module>pig-websocket</module>
 	</modules>
 
     <dependencyManagement>
