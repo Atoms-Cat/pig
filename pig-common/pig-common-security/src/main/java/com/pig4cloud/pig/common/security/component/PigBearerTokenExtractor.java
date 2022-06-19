@@ -16,8 +16,10 @@
 
 package com.pig4cloud.pig.common.security.component;
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.server.resource.BearerTokenError;
 import org.springframework.security.oauth2.server.resource.BearerTokenErrors;
@@ -81,6 +83,9 @@ public class PigBearerTokenExtractor implements BearerTokenResolver {
 
 	private String resolveFromAuthorizationHeader(HttpServletRequest request) {
 		String authorization = request.getHeader(this.bearerTokenHeaderName);
+		if (StrUtil.isBlank(authorization)) {
+			authorization = request.getParameter(this.bearerTokenHeaderName);
+		}
 		if (!StringUtils.startsWithIgnoreCase(authorization, "bearer")) {
 			return null;
 		}
