@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pig</artifactId>
-		<version>3.5.0</version>
+		<version>3.5.1</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<description>软交换相关功能（Freeswitch 、Opensips等）</description>

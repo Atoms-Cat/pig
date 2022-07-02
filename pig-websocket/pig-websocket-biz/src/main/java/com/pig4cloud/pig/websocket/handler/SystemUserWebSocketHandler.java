@@ -122,7 +122,8 @@ public class SystemUserWebSocketHandler implements WebSocketMessageBrokerConfigu
 				.setSystemLogin("guest")
 				.setSystemPasscode("guest")
 				.setSystemHeartbeatSendInterval(5000)
-				.setSystemHeartbeatReceiveInterval(4000);
+				.setSystemHeartbeatReceiveInterval(4000)
+		;
 		//服务端点请求前缀
 		registry.setApplicationDestinationPrefixes("/request");
 	}

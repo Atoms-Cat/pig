@@ -32,11 +32,18 @@ public class WebSocketController {
 	@Autowired
 	public AmqpTemplate amqpTemplate;
 
-	@MessageMapping("/hello")
-	@SendTo("/topic/greetings")
-	public String reply(@Payload String message, Principal user) {
-		return "Hello " + message;
+
+
+	/**
+	 * 接收用户信息
+	 * @param message
+	 * @param principal
+	 */
+	@MessageMapping("/exchange")
+	public void getExchangeMessage(@Payload String message, Principal principal) {
+		log.info("接收用户信息: {} {}", message, JSONObject.toJSONString(principal));
 	}
+
 
 	/**
 	 * 在RabbitMQ 控制台 新建 topic 类型 `atomscat.stomp.socket` 交换器（exchange）, 并且绑定新建的队列（queue）
@@ -45,13 +52,19 @@ public class WebSocketController {
 	 * @param principal
 	 * @return
 	 */
-	@MessageMapping("/exchange")
+//	@MessageMapping("/exchange")
 //	@SendTo("/exchange/atomscat.stomp.socket")
 	public String exchange(@Payload String message, Principal principal) {
 		return "Hello " + message;
 	}
 
-	@Scheduled(fixedRate = 1000 * 10)
+	@MessageMapping("/hello")
+	@SendTo("/topic/greetings")
+	public String reply(@Payload String message, Principal user) {
+		return "Hello " + message;
+	}
+
+//	@Scheduled(fixedRate = 1000 * 10)
 	public void send() {
 		// send all user
 		amqpTemplate.convertAndSend("atomscat.stomp.socket","*","ok");
