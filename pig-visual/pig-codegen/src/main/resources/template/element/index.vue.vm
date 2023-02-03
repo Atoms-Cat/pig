@@ -17,14 +17,18 @@
                     prop="${column.lowerAttrName}"
                     header-align="center"
                     align="center"
-                    label="${column.comments}">
+                      #if($column.comments)
+                      label="$column.comments">
+                      #else
+                      label="$column.lowerAttrName">
+                      #end
             </el-table-column>
           #end
           <el-table-column
                   header-align="center"
                   align="center"
                   label="操作">
-            <template slot-scope="scope">
+            <template #="scope">
               <el-button v-if="permissions.${moduleName}_${pathName}_edit" type="text" size="small" icon="el-icon-edit" @click="addOrUpdateHandle(scope.row.${pk.lowerAttrName})">修改</el-button>
               <el-button v-if="permissions.${moduleName}_${pathName}_del" type="text" size="small" icon="el-icon-delete" @click="deleteHandle(scope.row.${pk.lowerAttrName})">删除</el-button>
             </template>
@@ -52,7 +56,7 @@
 
 <script>
   import {fetchList, delObj} from '@/api/${pathName}'
-  import TableForm from './${pathName}-form'
+  import TableForm from './${pathName}-form.vue'
   import {mapGetters} from 'vuex'
   export default {
     data () {

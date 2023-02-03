@@ -16,6 +16,8 @@
 
 package com.pig4cloud.pig.auth.endpoint;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.TemporalAccessorUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,7 +27,6 @@ import com.pig4cloud.pig.admin.api.vo.TokenVo;
 import com.pig4cloud.pig.auth.support.handler.PigAuthenticationFailureEventHandler;
 import com.pig4cloud.pig.common.core.constant.CacheConstants;
 import com.pig4cloud.pig.common.core.constant.CommonConstants;
-import com.pig4cloud.pig.common.core.constant.SecurityConstants;
 import com.pig4cloud.pig.common.core.util.R;
 import com.pig4cloud.pig.common.core.util.RetOps;
 import com.pig4cloud.pig.common.core.util.SpringContextHolder;
@@ -45,12 +46,12 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -106,8 +107,7 @@ public class PigTokenEndpoint {
 			@RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
 			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
-		SysOauthClientDetails clientDetails = RetOps
-				.of(clientDetailsService.getClientDetailsById(clientId, SecurityConstants.FROM_IN)).getData()
+		SysOauthClientDetails clientDetails = RetOps.of(clientDetailsService.getClientDetailsById(clientId)).getData()
 				.orElseThrow(() -> new OAuthClientException("clientId 不合法"));
 
 		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
@@ -146,6 +146,7 @@ public class PigTokenEndpoint {
 			httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
 			this.authenticationFailureHandler.onAuthenticationFailure(request, response,
 					new InvalidBearerTokenException(OAuth2ErrorCodesExpand.TOKEN_MISSING));
+			return;
 		}
 		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 
@@ -153,6 +154,7 @@ public class PigTokenEndpoint {
 		if (authorization == null || authorization.getAccessToken() == null) {
 			this.authenticationFailureHandler.onAuthenticationFailure(request, response,
 					new InvalidBearerTokenException(OAuth2ErrorCodesExpand.INVALID_BEARER_TOKEN));
+			return;
 		}
 
 		Map<String, Object> claims = authorization.getAccessToken().getClaims();
@@ -211,8 +213,14 @@ public class PigTokenEndpoint {
 			tokenVo.setUsername(authorization.getPrincipalName());
 			OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 			tokenVo.setAccessToken(accessToken.getToken().getTokenValue());
-			tokenVo.setExpiresAt(accessToken.getToken().getExpiresAt());
-			tokenVo.setIssuedAt(accessToken.getToken().getIssuedAt());
+
+			String expiresAt = TemporalAccessorUtil.format(accessToken.getToken().getExpiresAt(),
+					DatePattern.NORM_DATETIME_PATTERN);
+			tokenVo.setExpiresAt(expiresAt);
+
+			String issuedAt = TemporalAccessorUtil.format(accessToken.getToken().getIssuedAt(),
+					DatePattern.NORM_DATETIME_PATTERN);
+			tokenVo.setIssuedAt(issuedAt);
 			return tokenVo;
 		}).collect(Collectors.toList());
 		result.setRecords(tokenVoList);

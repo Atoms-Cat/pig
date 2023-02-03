@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.pig4cloud</groupId>
         <artifactId>pig-upms</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.5</version>
     </parent>
 
     <artifactId>pig-upms-biz</artifactId>
@@ -66,8 +66,8 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
         <!--注册中心客户端-->
         <dependency>
@@ -83,6 +83,11 @@
         <dependency>
             <groupId>io.springboot.sms</groupId>
             <artifactId>aliyun-sms-spring-boot-starter</artifactId>
+        </dependency>
+        <!--xss 过滤-->
+        <dependency>
+            <groupId>com.pig4cloud</groupId>
+            <artifactId>pig-common-xss</artifactId>
         </dependency>
         <!--undertow容器-->
         <dependency>

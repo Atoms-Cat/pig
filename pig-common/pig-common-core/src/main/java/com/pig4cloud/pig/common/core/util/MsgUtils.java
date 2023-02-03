@@ -1,6 +1,5 @@
 package com.pig4cloud.pig.common.core.util;
 
-import cn.hutool.extra.spring.SpringUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.context.MessageSource;
 
@@ -21,7 +20,7 @@ public class MsgUtils {
 	 * @return
 	 */
 	public String getMessage(String code) {
-		MessageSource messageSource = SpringUtil.getBean("messageSource");
+		MessageSource messageSource = SpringContextHolder.getBean("messageSource");
 		return messageSource.getMessage(code, null, Locale.CHINA);
 	}
 
@@ -31,7 +30,17 @@ public class MsgUtils {
 	 * @return
 	 */
 	public String getMessage(String code, Object... objects) {
-		MessageSource messageSource = SpringUtil.getBean("messageSource");
+		MessageSource messageSource = SpringContextHolder.getBean("messageSource");
+		return messageSource.getMessage(code, objects, Locale.CHINA);
+	}
+
+	/**
+	 * security 通过code 和参数获取中文错误信息
+	 * @param code
+	 * @return
+	 */
+	public String getSecurityMessage(String code, Object... objects) {
+		MessageSource messageSource = SpringContextHolder.getBean("securityMessageSource");
 		return messageSource.getMessage(code, objects, Locale.CHINA);
 	}
 

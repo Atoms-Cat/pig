@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.pig4cloud</groupId>
         <artifactId>pig-upms</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.5</version>
     </parent>
 
     <artifactId>pig-upms-api</artifactId>
@@ -43,8 +43,8 @@
         </dependency>
         <!--feign 注解依赖-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-openfeign-core</artifactId>
+            <groupId>com.pig4cloud</groupId>
+            <artifactId>pig-common-feign</artifactId>
             <optional>true</optional>
         </dependency>
         <!--mybatis 依赖-->

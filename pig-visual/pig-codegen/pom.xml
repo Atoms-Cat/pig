@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>com.pig4cloud</groupId>
 		<artifactId>pig-visual</artifactId>
-		<version>3.5.3</version>
+		<version>3.6.5</version>
 	</parent>
 
 	<artifactId>pig-codegen</artifactId>
@@ -61,8 +61,8 @@
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 		</dependency>
 		<!--common-->
 		<dependency>

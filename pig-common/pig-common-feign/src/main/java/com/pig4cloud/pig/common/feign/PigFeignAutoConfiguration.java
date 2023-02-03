@@ -19,6 +19,8 @@ package com.pig4cloud.pig.common.feign;
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pig4cloud.pig.common.feign.retry.FeignRetryAspect;
 import com.pig4cloud.pig.common.feign.sentinel.ext.PigSentinelFeign;
 import com.pig4cloud.pig.common.feign.sentinel.handle.PigUrlBlockHandler;
 import com.pig4cloud.pig.common.feign.sentinel.parser.PigHeaderRequestOriginParser;
@@ -50,14 +52,19 @@ public class PigFeignAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public BlockExceptionHandler blockExceptionHandler() {
-		return new PigUrlBlockHandler();
+	public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
+		return new PigUrlBlockHandler(objectMapper);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean
 	public RequestOriginParser requestOriginParser() {
 		return new PigHeaderRequestOriginParser();
+	}
+
+	@Bean
+	public FeignRetryAspect feignRetryAspect() {
+		return new FeignRetryAspect();
 	}
 
 }

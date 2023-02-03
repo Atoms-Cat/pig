@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.pig4cloud</groupId>
         <artifactId>pig-common</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.5</version>
     </parent>
 
     <artifactId>pig-common-core</artifactId>
@@ -34,8 +34,7 @@
         <!--hutool-->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
+            <artifactId>hutool-core</artifactId>
         </dependency>
         <!--redis-->
         <dependency>

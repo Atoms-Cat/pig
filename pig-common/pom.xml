@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.pig4cloud</groupId>
         <artifactId>pig</artifactId>
-        <version>3.5.3</version>
+        <version>3.6.5</version>
     </parent>
 
     <artifactId>pig-common</artifactId>
@@ -40,5 +40,6 @@
         <module>pig-common-security</module>
         <module>pig-common-feign</module>
         <module>pig-common-swagger</module>
+        <module>pig-common-xss</module>
     </modules>
 </project>
